@@ -15,9 +15,8 @@ function toggleMute() {
 
 function enableSound() {
     if (video) {
-        video.muted = false;
-        video.volume = 0.5;
-        video.play();
+        video.muted = false; // ปลดล็อคเสียง
+        video.play();        // ย้ำให้วิดีโอเล่นต่อ
         volIcon.innerText = "🔊";
     }
 }
@@ -139,3 +138,4 @@ function showFinal(name, imgUrl) {
 }
 
 showHome();
+
