@@ -39,7 +39,7 @@ function showHome() {
 function handleStart() { enableSound(); startGame(); }
 function handleDesc() { enableSound(); showDescription(); }
 
-// 3. หน้าคำอธิบาย (จดหมาย)
+// 3. หน้าคำอธิบาย
 function showDescription() {
     app.innerHTML = `
         <div class="card animate__animated animate__backInDown">
