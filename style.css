@@ -9,15 +9,14 @@ body, html {
 
 #bg-video {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
     filter: brightness(0.6);
     object-fit: cover;
-    /* เพิ่มบรรทัดนี้เพื่อให้กดผ่านวิดีโอได้ */
-    pointer-events: none; 
+    pointer-events: none; /* กดปุ่มผ่านวิดีโอได้ */
 }
 
 .container {
@@ -27,17 +26,20 @@ body, html {
     align-items: center;
     text-align: center;
     color: white;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .card {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 2rem;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     max-width: 500px;
-    width: 85%;
+    width: 90%;
 }
 
 button {
@@ -50,28 +52,6 @@ button {
     font-size: 1.1rem;
     cursor: pointer;
     transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-}
-
-button:hover {
-    transform: scale(1.05);
-    background: #ff758f;
-}
-
-.letter {
-    background: #fff5f5;
-    color: #333;
-    padding: 25px;
-    border-radius: 15px;
-}
-
-.item-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 8px;
-    border: 2px solid white;
 }
 
 #volume-control {
@@ -79,7 +59,7 @@ button:hover {
     top: 15px;
     right: 15px;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     width: 45px;
     height: 45px;
     display: flex;
@@ -90,15 +70,18 @@ button:hover {
     color: white;
 }
 
-/* ปรับปรุงสำหรับมือถือ */
-@media (max-width: 600px) {
-    .card {
-        padding: 1.5rem;
-    }
-    button {
-        width: 100%;
-        margin: 5px 0;
-    }
-    h1 { font-size: 1.8rem; }
+.item-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    border: 2px solid white;
 }
 
+/* Responsive สำหรับมือถือ */
+@media (max-width: 600px) {
+    .card { padding: 1.2rem; }
+    h1 { font-size: 1.5rem; }
+    button { width: 100%; margin: 5px 0; }
+}
