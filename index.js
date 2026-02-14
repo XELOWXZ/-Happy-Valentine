@@ -6,6 +6,7 @@ const volIcon = document.getElementById('volume-icon');
 function toggleMute() {
     if (video.muted) {
         video.muted = false;
+        video.play(); // สั่งเล่นซ้ำเพื่อให้ภาพไม่หยุด (สำคัญสำหรับ iOS)
         volIcon.innerText = "🔊";
     } else {
         video.muted = true;
@@ -15,9 +16,17 @@ function toggleMute() {
 
 function enableSound() {
     if (video) {
-        video.muted = false; // ปลดล็อคเสียง
-        video.play();        // ย้ำให้วิดีโอเล่นต่อ
-        volIcon.innerText = "🔊";
+        video.muted = false;
+        video.volume = 0.5;
+        // ป้องกัน Error จากการเล่นไฟล์
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                volIcon.innerText = "🔊";
+            }).catch(error => {
+                console.log("Autoplay was prevented");
+            });
+        }
     }
 }
 
@@ -25,8 +34,8 @@ function enableSound() {
 function showHome() {
     app.innerHTML = `
         <div class="card animate__animated animate__fadeIn">
-            <h1>HAPPY VALENTINE'S DAY ❤️</h1>
-            <p>ยินดีต้อนรับสู่โลกของคนน่ารัก</p>
+            <h1>HAPPY VALENTINE'S ❤️</h1>
+            <p>ทำให้เปาสุดน่ารักนะครับ</p>
             <div style="margin-top: 20px;">
                 <button onclick="handleStart()">เริ่มเล่นเกม</button>
                 <button onclick="handleDesc()">อ่านคำอธิบาย</button>
@@ -42,16 +51,16 @@ function handleDesc() { enableSound(); showDescription(); }
 function showDescription() {
     app.innerHTML = `
         <div class="card animate__animated animate__backInDown">
-            <div class="letter">
+            <div style="background: #fff5f5; color: #333; padding: 20px; border-radius: 15px;">
                 <h3 style="color: #ff4d6d;">💌 ถึงเปา...</h3>
                 <p>" เว็บนี้ทำให้ เปาสุดน่ารัก เพื่อให้ในวันวาเลนไทน์ "</p>
-                <button onclick="showHome()" style="background: #333;">กลับหน้าหลัก</button>
+                <button onclick="showHome()" style="background: #333; color: white;">กลับหน้าหลัก</button>
             </div>
         </div>
     `;
 }
 
-// 4. ระบบแจ้งเตือนเมื่อตอบผิด
+// 4. ระบบแจ้งเตือนผิด
 function wrongAnswer() {
     Swal.fire({
         title: 'โกรธแล้วนะ! 💢',
@@ -64,7 +73,7 @@ function wrongAnswer() {
     });
 }
 
-// 5. ด่านต่างๆ
+// 5. ระบบด่าน
 function startGame() {
     app.innerHTML = `
         <div class="card animate__animated animate__fadeInRight">
@@ -94,18 +103,18 @@ function level3() {
         <div class="card animate__animated animate__fadeInRight">
             <h2>ด่านที่ 3</h2>
             <p>อยากได้อะไรเป็นพิเศษไหมครับ?</p>
-            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
                 <div onclick="confirmGift('ดอกไม้', 'https://s.isanook.com/cl/0/up/2014/02/164644550-600x399.jpg')">
                     <img src="https://s.isanook.com/cl/0/up/2014/02/164644550-600x399.jpg" class="item-img"><br>
-                    <button>ดอกไม้</button>
+                    <button style="width: auto; padding: 5px 15px; font-size: 0.9rem;">ดอกไม้</button>
                 </div>
                 <div onclick="confirmGift('ดอกโตน', 'https://img.icons8.com/color/1200/18-plus.jpg')">
                     <img src="https://img.icons8.com/color/1200/18-plus.jpg" class="item-img"><br>
-                    <button>ดอกโตน</button>
+                    <button style="width: auto; padding: 5px 15px; font-size: 0.9rem;">ดอกโตน</button>
                 </div>
                 <div onclick="confirmGift('ไปหา', 'https://prodigits.co.uk/pthumbs/screensavers/down/cartoon-anime/driver_y9xsrl2n.gif')">
                     <img src="https://prodigits.co.uk/pthumbs/screensavers/down/cartoon-anime/driver_y9xsrl2n.gif" class="item-img"><br>
-                    <button>ไปหา</button>
+                    <button style="width: auto; padding: 5px 15px; font-size: 0.9rem;">ไปหา</button>
                 </div>
             </div>
         </div>
@@ -130,12 +139,12 @@ function showFinal(name, imgUrl) {
     app.innerHTML = `
         <div class="card animate__animated animate__zoomIn">
             <h2>จัดไปตามคำขอ!</h2>
-            <img src="${imgUrl}" style="width:180px; border-radius:15px; margin: 15px 0;">
+            <img src="${imgUrl}" style="width:180px; border-radius:15px; margin: 15px 0; border: 3px solid white;">
             <p>แคปหน้าจอส่งให้ <strong>xacz_b</strong> ได้เลย!</p>
             <button onclick="showHome()">กลับหน้าหลัก</button>
         </div>
     `;
 }
 
+// เริ่มต้นหน้าแรก
 showHome();
-
