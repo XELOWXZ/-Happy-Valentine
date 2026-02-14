@@ -15,8 +15,9 @@ body, html {
     min-height: 100%;
     z-index: -1;
     filter: brightness(0.6);
-    object-fit: cover; /* ทำให้วิดีโอเต็มจอไม่เบี้ยว */
-    pointer-events: none; /* ป้องกันการกดโดนวิดีโอ */
+    object-fit: cover;
+    /* เพิ่มบรรทัดนี้เพื่อให้กดผ่านวิดีโอได้ */
+    pointer-events: none; 
 }
 
 .container {
@@ -100,3 +101,4 @@ button:hover {
     }
     h1 { font-size: 1.8rem; }
 }
+
